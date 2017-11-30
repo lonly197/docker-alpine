@@ -29,7 +29,7 @@ ENV	JAVA_HOME=/usr/lib/jvm/java-8-oracle \
 RUN	set -x \
     ## Add alpine repo
     && echo http://mirrors.aliyun.com/alpine/v3.6/main/ >> /etc/apk/repositories \
-    && echo http://mirrors.aliyun.com/alpine/v3.6/community/>> /etc/apk/repositories \
+    && echo http://mirrors.aliyun.com/alpine/v3.6/community/ >> /etc/apk/repositories \
     ## Update apk package
     && apk update \
     ## Add base package
