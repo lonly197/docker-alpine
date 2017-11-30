@@ -37,7 +37,7 @@ RUN	set -x \
     ## Update ca-cert
     && update-ca-certificates \
     ## Define timezone
-    && cp -r -f /usr/share/zoneinfo/Shanghai /etc/localtime \
+    && cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
     ## Install glibc-2.21 which is a hard dependency of Java 8
     && curl -Ls https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-2.21-r2.apk > /tmp/glibc-2.21-r2.apk \
