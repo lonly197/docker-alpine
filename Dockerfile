@@ -19,10 +19,11 @@ LABEL \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0"
 
-# Define environment   
-ENV	JAVA_HOME=/usr/lib/jvm/java-8-oracle \
-    PATH=$PATH:$JAVA_HOME:JAVA_HOME/bin:JAVA_HOME/jre:JAVA_HOME/jre/bin \
-    # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
+# Define environment
+## Ensure local python is preferred over distribution python   
+ENV	PATH=/usr/local/bin:$PATH \
+    ## http://bugs.python.org/issue19846
+    ## > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
     LANG=C.UTF-8
 
 # Install base packages
@@ -33,7 +34,7 @@ RUN	set -x \
     ## Update apk package
     && apk update \
     ## Add base package
-    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tzdata rsync jq openjdk8 tar unzip vim \
+    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tzdata rsync jq tar unzip vim \
     ## Update ca-cert
     && update-ca-certificates \
     ## Define timezone
