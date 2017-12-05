@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ARG VERSION=3.6
+ARG VERSION=3.6-slim
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -11,7 +11,7 @@ LABEL \
     org.label-schema.license="Apache License 2.0" \
     org.label-schema.name="lonly/docker-alpine" \
     org.label-schema.url="https://github.com/lonly197" \
-    org.label-schema.description="This is a custom Alpine Dcoker Image that contains the python2 and oracle jdk environment, as well as some basic packages." \
+    org.label-schema.description="This is a custom Alpine Dcoker Image that contains some basic packages." \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/lonly197/docker-apline" \
     org.label-schema.vcs-type="Git" \
@@ -41,7 +41,7 @@ RUN	set -x \
     && apk add --no-cache --upgrade linux-headers \
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
     ## Install Build Base
-    && apk add --no-cache --upgrade build-base \
+    # && apk add --no-cache --upgrade build-base \
     ## Cleanup
     && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
