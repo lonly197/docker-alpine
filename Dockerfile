@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ARG VERSION=3.6
+ARG VERSION=3.6-cn
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -41,61 +41,15 @@ RUN	set -x \
     && cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     ## Define uname
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
-    ## Install glibc-2.21 which is a hard dependency of Java 8
-    && curl -Ls https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-2.21-r2.apk > /tmp/glibc-2.21-r2.apk \
-    && apk add --allow-untrusted /tmp/glibc-2.21-r2.apk \
-    ## Install jdk
-    && wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz | tar -xzf - -C /tmp \
-    && mkdir -p /usr/lib/jvm \
-    && mv /tmp/jdk1.8.0_151 ${JAVA_HOME} \
-    ## Install python
-    && apk add --no-cache --upgrade build-base linux-headers python2 py-setuptools python2-dev \
+    && apk add --no-cache --upgrade build-base linux-headers \
     ### Make some useful symlinks that are expected to exist
     && if [[ ! -e /usr/bin/python ]];        then ln -sf /usr/bin/python2.7 /usr/bin/python; fi \
     && if [[ ! -e /usr/bin/python-config ]]; then ln -sf /usr/bin/python2.7-config /usr/bin/python-config; fi \
     && if [[ ! -e /usr/bin/easy_install ]];  then ln -sf /usr/bin/easy_install-2.7 /usr/bin/easy_install; fi \
-    ### Install and upgrade pip
-    && easy_install pip \
-    && pip install --upgrade --no-cache-dir pip \
     && if [[ ! -e /usr/bin/pip ]]; then ln -sf /usr/bin/pip2.7 /usr/bin/pip; fi \
     ## Cleanup
     && apk del build-dependencies \
-    && rm -rf "$JAVA_HOME/lib/missioncontrol" \
-           "$JAVA_HOME/lib/visualvm" \
-           "$JAVA_HOME/lib/"*javafx* \
-           "$JAVA_HOME/jre/lib/plugin.jar" \
-           "$JAVA_HOME/jre/lib/ext/jfxrt.jar" \
-           "$JAVA_HOME/jre/bin/javaws" \
-           "$JAVA_HOME/jre/lib/javaws.jar" \
-           "$JAVA_HOME/jre/lib/desktop" \
-           "$JAVA_HOME/jre/plugin" \
-           "$JAVA_HOME/jre/lib/"deploy* \
-           "$JAVA_HOME/jre/lib/"*javafx* \
-           "$JAVA_HOME/jre/lib/"*jfx* \
-           "$JAVA_HOME/jre/lib/amd64/libdecora_sse.so" \
-           "$JAVA_HOME/jre/lib/amd64/"libprism_*.so \
-           "$JAVA_HOME/jre/lib/amd64/libfxplugins.so" \
-           "$JAVA_HOME/jre/lib/amd64/libglass.so" \
-           "$JAVA_HOME/jre/lib/amd64/libgstreamer-lite.so" \
-           "$JAVA_HOME/jre/lib/amd64/"libjavafx*.so \
-           "$JAVA_HOME/jre/lib/amd64/"libjfx*.so \
-    && rm -rf "$JAVA_HOME/jre/bin/jjs" \
-           "$JAVA_HOME/jre/bin/keytool" \
-           "$JAVA_HOME/jre/bin/orbd" \
-           "$JAVA_HOME/jre/bin/pack200" \
-           "$JAVA_HOME/jre/bin/policytool" \
-           "$JAVA_HOME/jre/bin/rmid" \
-           "$JAVA_HOME/jre/bin/rmiregistry" \
-           "$JAVA_HOME/jre/bin/servertool" \
-           "$JAVA_HOME/jre/bin/tnameserv" \
-           "$JAVA_HOME/jre/bin/unpack200" \
-           "$JAVA_HOME/jre/lib/ext/nashorn.jar" \
-           "$JAVA_HOME/jre/lib/jfr.jar" \
-           "$JAVA_HOME/jre/lib/jfr" \
-           "$JAVA_HOME/jre/lib/oblique-fonts" \
-    && rm -rf *.tgz \
-            *.tar \
-            *.zip \
+    && rm -rf *.tgz *.tar *.zip \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
