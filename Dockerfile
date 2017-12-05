@@ -34,14 +34,14 @@ RUN	set -x \
     ## Update apk package
     && apk update \
     ## Add base package
-    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tzdata rsync jq tar unzip vim \
+    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tzdata tar unzip vim \
     ## Update ca-cert
     && update-ca-certificates \
     ## Define timezone
     && cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     ## Define uname
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
-    && apk add --no-cache --upgrade build-base linux-headers \
+    # && apk add --no-cache --upgrade build-base linux-headers \
     ### Make some useful symlinks that are expected to exist
     && if [[ ! -e /usr/bin/python ]];        then ln -sf /usr/bin/python2.7 /usr/bin/python; fi \
     && if [[ ! -e /usr/bin/python-config ]]; then ln -sf /usr/bin/python2.7-config /usr/bin/python-config; fi \
@@ -52,6 +52,3 @@ RUN	set -x \
     && rm -rf *.tgz *.tar *.zip \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
-
-# Define bash as default command
-CMD ["/bin/bash"]
