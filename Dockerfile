@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ARG VERSION=3.6-cn
+ARG VERSION=3.6-slim-cn
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -34,19 +34,14 @@ RUN	set -x \
     ## Update apk package
     && apk update \
     ## Add base package
-    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tzdata tar unzip vim \
+    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates wget tzdata tar unzip \
     ## Update ca-cert
     && update-ca-certificates \
     ## Define timezone
     && cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    ## Define uname
+    ## Update kernel header files
+    && apk add --no-cache --upgrade linux-headers \
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
-    # && apk add --no-cache --upgrade build-base linux-headers \
-    ### Make some useful symlinks that are expected to exist
-    && if [[ ! -e /usr/bin/python ]];        then ln -sf /usr/bin/python2.7 /usr/bin/python; fi \
-    && if [[ ! -e /usr/bin/python-config ]]; then ln -sf /usr/bin/python2.7-config /usr/bin/python-config; fi \
-    && if [[ ! -e /usr/bin/easy_install ]];  then ln -sf /usr/bin/easy_install-2.7 /usr/bin/easy_install; fi \
-    && if [[ ! -e /usr/bin/pip ]]; then ln -sf /usr/bin/pip2.7 /usr/bin/pip; fi \
     ## Cleanup
     && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
