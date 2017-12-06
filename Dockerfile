@@ -45,5 +45,6 @@ RUN	set -x \
     ## Cleanup
     && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
-    && rm -rf /var/cache/apk/* \
+    && if [[ -e /var/cache/apk ]]; then rm -rf /var/cache/apk/* ; fi \
+    && if [[ -e /root/.cache ]]; then rm -rf /root/.cache ; fi \
     && rm -rf /tmp/*
