@@ -34,7 +34,7 @@ RUN	set -x \
     ## Update apk package
     && apk update \
     ## Add base package
-    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates wget tar unzip \
+    && apk add --no-cache --upgrade --virtual=build-dependencies bash curl ca-certificates openssl wget tar unzip \
     ## Update ca-cert
     && update-ca-certificates \
     ## Update kernel header files
