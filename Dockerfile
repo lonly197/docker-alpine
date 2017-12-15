@@ -43,7 +43,7 @@ RUN	set -x \
     ## Install Build Base
     && apk add --no-cache --upgrade build-base \
     ## Cleanup
-    && apk del build-dependencies \
+    # && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
