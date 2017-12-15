@@ -43,7 +43,7 @@ RUN	set -x \
     && apk add --no-cache --upgrade linux-headers \
     && echo -ne "Alpine Linux ${VERSION} image. (`uname -rsv`)\n" >> /root/.built \
     ## Cleanup
-    && apk del build-dependencies \
+    # && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
