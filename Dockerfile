@@ -45,7 +45,7 @@ RUN	set -x \
     ## Add Package Base Build Dependence
     && apk add --no-cache --upgrade build-base \
     ## Cleanup
-    && apk del build-dependencies \
+    # && apk del build-dependencies \
     && rm -rf *.tgz *.tar *.zip \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
